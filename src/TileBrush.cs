@@ -6,17 +6,19 @@ namespace STiles;
 public class TileBrush
 {
     static int count = -1;
-    public int Index;
-    public Element Rect;
+    public int SelectedType;
+    public CollidableElement Rect;
     static double currY = -9;
     public double PosX;
     public double PosY;
+    public bool IsTextured = false;
+    public STexture Texture = new STexture(1, 1);
     
 
     public TileBrush(CollidableElement button)
     {
         count++;
-        Index = count;
+        SelectedType = count;
         double x = count % 2 != 0? -11.5 : -8;
         if(count % 2 == 0)
             currY += 3;
@@ -30,7 +32,7 @@ public class TileBrush
     {
         count++;
         double x = count % 2 == 0? -11.5 : -8;
-        Index = count;
+        SelectedType = count;
         if(count % 2 == 0)
             currY += 3;
         Rect = new FullRectangle(x, currY, 2, 2, Color.LightGray);

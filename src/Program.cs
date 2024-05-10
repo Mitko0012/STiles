@@ -4,6 +4,7 @@ namespace STiles
 {
     public class Program
     {
+        [STAThread]
         public static void Main(string[] args)
         {
             UI uI = new UI();

@@ -6,7 +6,7 @@ namespace STiles;
 public class Cursor : GameLogic
 {
     FullRectangle cursor = new FullRectangle(0, 0, 1, 1, Color.LightGray);
-    public static int SelectedTexture = 0;
+    public static int SelectedType = 0;
     public override void OnStart()
     {
         
@@ -16,7 +16,7 @@ public class Cursor : GameLogic
     {
         cursor.PosX = Math.Floor(Mouse.PosX);
         cursor.PosY = Math.Floor(Mouse.PosY);           
-        if(Collider.IsPointInside(UI.Canvas, Mouse.PosX, Mouse.PosY))
+        if(Collider.IsPointInside(UI.Canvas, Mouse.PosX, Mouse.PosY) && !Collider.IsPointInside(UI.addButt, Mouse.PosX, Mouse.PosY) && UI.AddButtonVisible)
         {
             if(Mouse.LeftDown)
             {
@@ -38,19 +38,19 @@ public class Cursor : GameLogic
         Tile? tile = CheckForCollision();
         if(tile != null)
         {
-            if(SelectedTexture == 0)
+            if(SelectedType == 0)
             {
                 Tiles.CurrTiles.Remove(tile);   
             }    
             else
             {
-                tile.Type = SelectedTexture;
+                tile.Type = SelectedType;
             }
         }
         else
         {
-            if(SelectedTexture != 0)
-                Tiles.CurrTiles.Add(new Tile(rect, text, SelectedTexture));
+            if(SelectedType != 0)
+                Tiles.CurrTiles.Add(new Tile(rect, text, SelectedType));
         }
     }
 

@@ -1,10 +1,11 @@
 using Seed;
+using System.Windows.Forms;
 
 namespace STiles;
 
 public static class Parser
 {
-    public static string Parse()
+    public static void Parse()
     {
         Tilemap map = new Tilemap();
         
@@ -22,7 +23,10 @@ public static class Parser
         }
         catch (Exception)
         {
-            ObjectSerialization.SerializeJson(map);
+            firstX = 0;
+            firstY = 0;
+            lastX = 0;
+            lastY = 0;
         }
 
         foreach (Tile tile in Tiles.CurrTiles)
@@ -53,6 +57,11 @@ public static class Parser
             map.Map[tile.PosY - firstY][tile.PosX - firstX] = tile.Type;
         }
         
-        return ObjectSerialization.SerializeJson(map);
+        SaveFileDialog dialog = new SaveFileDialog();
+        dialog.Filter = "JSON files (*.json) | *.json | All files (*.) | *.";
+        if(dialog.ShowDialog() == DialogResult.OK)
+        {
+            ObjectSerialization.SerializeJsonToFile(map, dialog.FileName);
+        }
     }
 }
