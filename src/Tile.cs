@@ -1,18 +1,22 @@
 using System.Drawing;
 using Seed;
 
-namespace SMap;
+namespace STiles;
 
 public class Tile
 {
     public CollidableElement TileElement;
     public Text Text;
-
     public int Type;
+
+    public int PosX;
+    public int PosY;
     
     public Tile(CollidableElement element, Text text, int type)
     {
         TileElement = element;
+        PosX = (int)TileElement.PosX;
+        PosY = (int)TileElement.PosY;
         Text = text;
         Type = type;
     }
@@ -21,7 +25,11 @@ public class Tile
     {
         if(Type != 0)
         {
-            EmptyRectangle rect = new EmptyRectangle(TileElement.PosX + 0.05, TileElement.PosY + 0.05, TileElement.Width - 0.1, TileElement.Height - 0.1, 0.15, Color.Black);
+            TileElement.PosX = PosX;
+            TileElement.PosY = PosY;
+            Text.PosX = PosX + TileElement.Width / 2;
+            Text.PosY = PosY + TileElement.Height / 2;
+            EmptyRectangle rect = new EmptyRectangle(PosX + 0.05, PosY + 0.05, TileElement.Width - 0.1, TileElement.Height - 0.1, 0.15, Color.Black);
             Text.DisplayText = Convert.ToString(Type);
             TileElement.Draw();
             Text.Draw();

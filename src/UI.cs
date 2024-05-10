@@ -3,7 +3,7 @@ using System.Security.Permissions;
 using System.Windows.Forms;
 using Seed;
 
-namespace SMap;
+namespace STiles;
 
 public class UI : GameLogic
 {
@@ -69,5 +69,7 @@ public class UI : GameLogic
         {
             mouseDown = false;
         }
+
+        Console.WriteLine(Parser.Parse());
     }
 }

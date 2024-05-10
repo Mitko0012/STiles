@@ -1,6 +1,6 @@
 using Seed;
 
-namespace SMap;
+namespace STiles;
 
 public class Tiles : GameLogic
 {

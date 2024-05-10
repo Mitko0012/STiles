@@ -1,18 +1,14 @@
 using System.Drawing;
 using Seed;
 
-namespace SMap;
+namespace STiles;
 
 public class TileBrush
 {
     static int count = -1;
-
     public int Index;
-
     public Element Rect;
-
     static double currY = -9;
-
     public double PosX;
     public double PosY;
     

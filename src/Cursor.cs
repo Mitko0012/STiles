@@ -1,7 +1,7 @@
 using System.Drawing;
 using Seed;
 
-namespace SMap;
+namespace STiles;
 
 public class Cursor : GameLogic
 {
@@ -37,9 +37,21 @@ public class Cursor : GameLogic
         text.VerticalAlignment = VTextAlignment.Center;
         Tile? tile = CheckForCollision();
         if(tile != null)
-            tile.Type = SelectedTexture;
+        {
+            if(SelectedTexture == 0)
+            {
+                Tiles.CurrTiles.Remove(tile);   
+            }    
+            else
+            {
+                tile.Type = SelectedTexture;
+            }
+        }
         else
-            Tiles.CurrTiles.Add(new Tile(rect, text, SelectedTexture));
+        {
+            if(SelectedTexture != 0)
+                Tiles.CurrTiles.Add(new Tile(rect, text, SelectedTexture));
+        }
     }
 
     Tile? CheckForCollision()
