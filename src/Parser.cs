@@ -21,7 +21,7 @@ public static class Parser
             lastX = Tiles.CurrTiles[0].PosX;
             lastY = Tiles.CurrTiles[0].PosY;
         }
-        catch (Exception)
+        catch
         {
             firstX = 0;
             firstY = 0;

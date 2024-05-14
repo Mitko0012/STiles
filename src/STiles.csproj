@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <EmbeddedResource Include="Textures\Close.png" />
+    <EmbeddedResource Include="Textures\Add.png" />
+    <EmbeddedResource Include="Textures\Save.png" />
+    <EmbeddedResource Include="Textures\Load.png" />
+    <EmbeddedResource Include="Textures\UpArrow.png" />
+    <EmbeddedResource Include="Textures\DownArrow.png" />
+    <EmbeddedResource Include="Textures\LeftArrow.png" />
+    <EmbeddedResource Include="Textures\RightArrow.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SeedLib" Version="1.2.9" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+
+
+</Project>
