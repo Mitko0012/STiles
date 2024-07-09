@@ -9,6 +9,7 @@
     <EmbeddedResource Include="Textures\DownArrow.png" />
     <EmbeddedResource Include="Textures\LeftArrow.png" />
     <EmbeddedResource Include="Textures\RightArrow.png" />
+    <EmbeddedResource Include="Textures\LoadTile.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,12 +17,10 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-
 
 </Project>

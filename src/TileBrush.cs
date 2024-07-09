@@ -14,7 +14,7 @@ public class TileBrush
     public double PosY;
     public bool IsTextured = false;
     public STexture Texture = new STexture(1, 1);
-    Text text = new Text(1, 1, 1, "Arial", "Nigger");
+    Text text = new Text(1, 1, 1, "Arial", "");
     
 
     public TileBrush(CollidableElement button)

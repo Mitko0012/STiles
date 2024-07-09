@@ -16,7 +16,7 @@ public class UI : GameLogic
 
     Sprite goUp = new Sprite(-11.2, -11.7, 1.5, 1.5, new STexture("STiles.Textures.DownArrow.png", STextureOrigin.EmbeddedImage));
     Sprite goDown = new Sprite(-8.1, -11.7, 1.5, 1.5, new STexture("STiles.Textures.UpArrow.png", STextureOrigin.EmbeddedImage));
-    public const int MaxBrushes = 9;
+    public const int MaxBrushes = 7;
     public static double MaxOffset = 0;
 
     public static FullRectangle ControlRect = new FullRectangle(4, 7.5, 8.2, 5.1, Color.Gray);
@@ -25,6 +25,8 @@ public class UI : GameLogic
     Sprite scrollUp = new Sprite(7.2, 7.8, 1.8, 1.8, new STexture("STiles.Textures.UpArrow.png", STextureOrigin.EmbeddedImage));
     Sprite scrollRight = new Sprite(9.9, 10.3, 1.8, 1.8, new STexture("STiles.Textures.RightArrow.png", STextureOrigin.EmbeddedImage));
 
+    Sprite loadTile = new Sprite(-11.7, 3.3, 5.5, 2.5, new STexture("STiles.Textures.LoadTile.png", STextureOrigin.EmbeddedImage));
+    
     public static List<TileBrush> Buttons = new List<TileBrush>();
     public static double ButtonOffset = 0;
     bool mouseDown;
@@ -50,6 +52,7 @@ public class UI : GameLogic
         scrollUp.IsSticky = true;
         goUp.IsSticky= true;
         goDown.IsSticky= true;
+        loadTile.IsSticky = true;
     }
 
     public override void OnFrame()
@@ -129,6 +132,10 @@ public class UI : GameLogic
         {
             Camera.PosY += camSpeed * DeltaTime;
         }
+        if(Collider.IsPointInside(loadTile, Mouse.PosX, Mouse.PosY) && Mouse.LeftDown && !mouseDown)
+        {
+            Parser.DeParse();
+        }
 
         SideUI.Draw();
         goUp.Draw();
@@ -140,10 +147,11 @@ public class UI : GameLogic
         scrollDown.Draw();
         scrollRight.Draw();
         scrollUp.Draw();
+        loadTile.Draw();
 
         foreach(TileBrush button in Buttons)
         {
-            if(button.PosY - ButtonOffset < 6 && button.PosY - ButtonOffset > -9.5)
+            if(button.PosY - ButtonOffset < 3 && button.PosY - ButtonOffset > -9.5)
             {
                 if(Collider.IsPointInside((CollidableElement)button.Rect, Mouse.PosX, Mouse.PosY) && Mouse.LeftDown && !mouseDown)
                 {

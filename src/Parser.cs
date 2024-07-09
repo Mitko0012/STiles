@@ -1,5 +1,7 @@
 using Seed;
 using System.Windows.Forms;
+using System.IO;
+using System.Drawing;
 
 namespace STiles;
 
@@ -58,10 +60,54 @@ public static class Parser
         }
         
         SaveFileDialog dialog = new SaveFileDialog();
-        dialog.Filter = "JSON files (*.json) | *.json | All files (*.) | *.";
+        dialog.Filter = "JSON files (*.json)|*.json|All files (*.)|*.";
         if(dialog.ShowDialog() == DialogResult.OK)
         {
             ObjectSerialization.SerializeJsonToFile(map, dialog.FileName);
+        }
+    }
+    public static void DeParse()
+    {
+        OpenFileDialog dialog = new OpenFileDialog();
+        dialog.Filter = "JSON files (*.json)|*.json|All files (*.)|*.";
+        if(dialog.ShowDialog() == DialogResult.OK)
+        {
+            StreamReader sr = new StreamReader(dialog.FileName);
+            string json = sr.ReadToEnd();
+            Tilemap map = ObjectSerialization.DeserializeJson<Tilemap>(json);
+            Tiles.CurrTiles = new List<Tile>();
+            int x = 0;
+            int y = 0;
+            foreach(List<int> i in map.Map)
+            {
+                foreach(int j in i)
+                {
+                    Text text = new Text(x + 1 / 2, y + 1 / 2,
+                    0.6, "Arial", "");
+                    text.Color = Color.White;
+                    text.HorisontalAlignment = HTextAlignment.Center;
+                    text.VerticalAlignment = VTextAlignment.Center;
+                    if(UI.Buttons.Count < j + 1)
+                    {
+                        while(UI.Buttons.Count < j + 1)
+                        {
+                            TileBrush butt = new TileBrush();
+                        }
+                    }
+                    if(UI.Buttons[j].IsTextured)
+                    {
+                        Tiles.CurrTiles.Add(new Tile(new Sprite(x, y, 1, 1, UI.Buttons[j].Texture), text, j));
+                    }
+                    else
+                    {
+                        FullRectangle rect = new FullRectangle(x, y, 1, 1, Color.Gray);
+                        Tiles.CurrTiles.Add(new Tile(rect, text, j));
+                    }
+                    x++;
+                }
+                x = 0;
+                y++;
+            }
         }
     }
 }
