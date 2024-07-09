@@ -74,7 +74,12 @@ public static class Parser
         {
             StreamReader sr = new StreamReader(dialog.FileName);
             string json = sr.ReadToEnd();
-            Tilemap map = ObjectSerialization.DeserializeJson<Tilemap>(json);
+            Tilemap? testMap = ObjectSerialization.DeserializeJson<Tilemap>(json);
+            Tilemap map = new Tilemap();
+            if(testMap != null)
+            {
+                map = testMap;
+            }
             Tiles.CurrTiles = new List<Tile>();
             int x = 0;
             int y = 0;
