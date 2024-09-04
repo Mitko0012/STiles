@@ -63,7 +63,17 @@ public static class Parser
         dialog.Filter = "JSON files (*.json)|*.json|All files (*.)|*.";
         if(dialog.ShowDialog() == DialogResult.OK)
         {
-            ObjectSerialization.SerializeJsonToFile(map, dialog.FileName);
+            try
+            {
+                ObjectSerialization.SerializeJsonToFile(map, dialog.FileName);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Successfully saved tilemap!");
+            }
+            catch
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Failed to save tilemap at {dialog.FileName}!");
+            }
         }
     }
     public static void DeParse()
@@ -72,47 +82,143 @@ public static class Parser
         dialog.Filter = "JSON files (*.json)|*.json|All files (*.)|*.";
         if(dialog.ShowDialog() == DialogResult.OK)
         {
-            StreamReader sr = new StreamReader(dialog.FileName);
-            string json = sr.ReadToEnd();
-            Tilemap? testMap = ObjectSerialization.DeserializeJson<Tilemap>(json);
-            Tilemap map = new Tilemap();
-            if(testMap != null)
+            try
             {
-                map = testMap;
-            }
-            Tiles.CurrTiles = new List<Tile>();
-            int x = 0;
-            int y = 0;
-            foreach(List<int> i in map.Map)
-            {
-                foreach(int j in i)
+                StreamReader sr = new StreamReader(dialog.FileName);
+                string json = sr.ReadToEnd();
+                sr.Close();
+                    Tilemap? testMap = ObjectSerialization.DeserializeJson<Tilemap>(json);
+                Tilemap map = new Tilemap();
+                if(testMap != null)
                 {
-                    Text text = new Text(x + 1 / 2, y + 1 / 2,
-                    0.6, "Arial", "");
-                    text.Color = Color.White;
-                    text.HorisontalAlignment = HTextAlignment.Center;
-                    text.VerticalAlignment = VTextAlignment.Center;
-                    if(UI.Buttons.Count < j + 1)
-                    {
-                        while(UI.Buttons.Count < j + 1)
-                        {
-                            TileBrush butt = new TileBrush();
-                        }
-                    }
-                    if(UI.Buttons[j].IsTextured)
-                    {
-                        Tiles.CurrTiles.Add(new Tile(new Sprite(x, y, 1, 1, UI.Buttons[j].Texture), text, j));
-                    }
-                    else
-                    {
-                        FullRectangle rect = new FullRectangle(x, y, 1, 1, Color.Gray);
-                        Tiles.CurrTiles.Add(new Tile(rect, text, j));
-                    }
-                    x++;
+                    map = testMap;
                 }
-                x = 0;
-                y++;
+                Tiles.CurrTiles = new List<Tile>();
+                int x = 0;
+                int y = 0;
+                foreach(List<int> i in map.Map)
+                {
+                    foreach(int j in i)
+                    {
+                        Text text = new Text(x + 1 / 2, y + 1 / 2,
+                        0.6, "Arial", "");
+                        text.Color = Color.White;
+                        text.HorisontalAlignment = HTextAlignment.Center;
+                        text.VerticalAlignment = VTextAlignment.Center;
+                        if(j != 0)
+                        { 
+                            if(UI.Buttons.Count < j + 1)
+                            {
+                                while(UI.Buttons.Count < j + 1)
+                                {
+                                    TileBrush butt = new TileBrush();
+                                }
+                            }
+                            if(UI.Buttons[j].IsTextured)
+                            {
+                                Tiles.CurrTiles.Add(new Tile(new Sprite(x, y, 1, 1, UI.Buttons[j].Texture), text, j));
+                            }
+                            else
+                            {
+                                FullRectangle rect = new FullRectangle(x, y, 1, 1, Color.Gray);
+                                Tiles.CurrTiles.Add(new Tile(rect, text, j));
+                            }
+                        }
+                        x++;
+                    }
+                    x = 0;
+                    y++;
+                }
+                Camera.PosX = 5.25;
+                Camera.PosY = 10;
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Successfully loaded tilemap!");
+            }
+            catch
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Failed to load tilemap! Couldn't load or parse " + dialog.FileName);
             }
         }
+    }
+
+    public static void SaveImageTile()
+    {
+        FileLocation[] locations = new FileLocation[UI.Buttons.Count];
+        int repeatCount = 0;
+        foreach(TileBrush brush in UI.Buttons)
+        {
+            locations[repeatCount] = new FileLocation(brush.IsTextured, brush.BrushType);
+            locations[repeatCount].Location = brush.IsTextured? brush.FileLocation : "";
+            repeatCount++;
+        }
+        SaveFileDialog dialog = new SaveFileDialog();
+        dialog.Filter = "JSON files (*.json)|*.json|All files (*.)|*.";
+        if(dialog.ShowDialog() == DialogResult.OK)
+        {
+            try
+            {
+                ObjectSerialization.SerializeJsonToFile(locations, dialog.FileName);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Successfully saved tileset!");
+            }
+            catch
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Failed to save tileset at {dialog.FileName}!");
+            }
+        }
+    }
+
+    public static void LoadImageTile()
+    {
+        OpenFileDialog dialog = new OpenFileDialog();
+        dialog.Filter = "JSON files (*.json)|*.json|All files (*.)|*.";
+        if(dialog.ShowDialog() == DialogResult.OK)
+        {
+            try
+            {
+                FileLocation[] fileLocations;
+                var testLocations = ObjectSerialization.DeserializeJsonFromFile<FileLocation[]>(dialog.FileName);
+                if(testLocations != null)
+                {
+                    fileLocations = testLocations;
+                }
+                else
+                {
+                    fileLocations = [new FileLocation(false, 0)];
+                }
+                foreach(FileLocation location in fileLocations)
+                {
+                    try
+                    {
+                        if(location.IsTextured)
+                        {
+                            var brush = UI.Buttons.FirstOrDefault(x => x.BrushType == location.Index);
+                            if(brush != null)
+                            {
+                                UI.LoadImage(location.Location, location.Index);
+                            }
+                            else
+                            {
+                                while(UI.Buttons.Count <= location.Index)
+                                {
+                                    new TileBrush();
+                                }
+                                UI.LoadImage(location.Location, location.Index);
+                            }
+                        }
+                    }
+                    catch(Exception ex) {Console.WriteLine(ex.Message);}
+                }
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Successfully loaded tileset!");
+            }
+            catch 
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Failed to load tileset! Couldn't load or parse " + dialog.FileName);
+            }
+        }    
     }
 }

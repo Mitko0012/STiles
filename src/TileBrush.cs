@@ -12,6 +12,7 @@ public class TileBrush
     static double currY = -11.5;
     public double PosX;
     public double PosY;
+    public string FileLocation = "";
     public bool IsTextured = false;
     public STexture Texture = new STexture(1, 1);
     Text text = new Text(1, 1, 1, "Arial", "");
@@ -61,7 +62,9 @@ public class TileBrush
         text.HorisontalAlignment = HTextAlignment.Center;
         text.VerticalAlignment = VTextAlignment.Center;
         text.Color = Color.White;
-        text.IsSticky = true; 
+        text.IsSticky = true;
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine($"Created tile: {BrushType}"); 
     }
 
     public void AddButt()
@@ -73,7 +76,7 @@ public class TileBrush
     {
         Rect.PosY = PosY - UI.ButtonOffset;
         Rect.Draw();
-        if(!IsTextured)
+        if(!IsTextured && BrushType != 0)
         {
             text.PosX = Rect.PosX + 1;
             text.PosY = Rect.PosY + 1;

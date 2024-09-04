@@ -10,17 +10,20 @@
     <EmbeddedResource Include="Textures\LeftArrow.png" />
     <EmbeddedResource Include="Textures\RightArrow.png" />
     <EmbeddedResource Include="Textures\LoadTile.png" />
+    <EmbeddedResource Include="Textures\SaveImageTile.png" />
+    <EmbeddedResource Include="Textures\LoadImageTile.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SeedLib" Version="1.2.11" />
+    <PackageReference Include="SeedLib" Version="1.2.12" />
   </ItemGroup>
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
 </Project>

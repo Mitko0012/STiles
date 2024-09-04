@@ -40,10 +40,17 @@ public class Cursor : GameLogic
         {
             if(SelectedType == 0)
             {
-                Tiles.CurrTiles.Remove(tile);   
+                Tiles.CurrTiles.Remove(tile);
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine($"Removed tile at {cursor.PosX}; {cursor.PosY};");   
             }    
             else
             {
+                if(tile.Type != SelectedType)
+                {
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.WriteLine($"Set tile at {cursor.PosX}; {cursor.PosY}; to {SelectedType}");  
+                }
                 tile.Type = SelectedType;
                 if(UI.Buttons[SelectedType].IsTextured)
                 {
@@ -59,6 +66,9 @@ public class Cursor : GameLogic
         else
         {
             if(SelectedType != 0)
+            {    
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine($"Set tile at {cursor.PosX}; {cursor.PosY}; to {SelectedType}");  
                 if(UI.Buttons[SelectedType].IsTextured)
                 {
                     Tiles.CurrTiles.Add(new Tile(new Sprite(cursor.PosX, cursor.PosY, 1, 1, UI.Buttons[SelectedType].Texture), text, SelectedType));
@@ -67,6 +77,7 @@ public class Cursor : GameLogic
                 {
                     Tiles.CurrTiles.Add(new Tile(rect, text, SelectedType));
                 }
+            }    
         }
     }
 
