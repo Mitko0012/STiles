@@ -18,7 +18,7 @@ public class UI : GameLogic
 
     Sprite goUp = new Sprite(-11.2, -11.7, 1.5, 1.5, new STexture("STiles.Textures.DownArrow.png", STextureOrigin.EmbeddedImage));
     Sprite goDown = new Sprite(-8.1, -11.7, 1.5, 1.5, new STexture("STiles.Textures.UpArrow.png", STextureOrigin.EmbeddedImage));
-    public const int MaxBrushes = 7;
+    public const int MaxBrushes = 5;
     public static double MaxOffset = 0;
 
     public static FullRectangle ControlRect = new FullRectangle(-5, 7.5, 18, 5.1, Color.Gray);
@@ -27,13 +27,21 @@ public class UI : GameLogic
     Sprite scrollUp = new Sprite(7.2, 7.8, 1.8, 1.8, new STexture("STiles.Textures.UpArrow.png", STextureOrigin.EmbeddedImage));
     Sprite scrollRight = new Sprite(9.9, 10.3, 1.8, 1.8, new STexture("STiles.Textures.RightArrow.png", STextureOrigin.EmbeddedImage));
     Sprite loadTile = new Sprite(-11.8, 3.3, 2.5, 2.5, new STexture("STiles.Textures.LoadTile.png", STextureOrigin.EmbeddedImage));
+    Sprite localCheckMark = new Sprite(-11.8, 0.5, 2.5, 2.5, new STexture("STiles.Textures.uncheckedbox.png", STextureOrigin.EmbeddedImage))
+    {
+        IsSticky = true
+    };
+    STexture _uncheckedTexture = new STexture("STiles.Textures.uncheckedbox.png", STextureOrigin.EmbeddedImage);
+    STexture _checkedTexture = new STexture("STiles.Textures.checkedbox.png", STextureOrigin.EmbeddedImage);
+
     Text coordText = new Text(-4, 8.6, 1.5, "Arial", "222");
+    const double scrollSpeed = 0.2;
     
     public static List<TileBrush> Buttons = new List<TileBrush>();
     public static double ButtonOffset = 0;
     bool mouseDown;
-
     public static bool AddButtonVisible = false;
+    public static bool LocalPathActive = false;
 
     public override void OnStart()
     {
@@ -82,18 +90,26 @@ public class UI : GameLogic
             AddButtonVisible = true;
         }
         
+        if(LocalPathActive)
+        {
+            localCheckMark.Texture = _checkedTexture;
+        }
+        else
+        {
+            localCheckMark.Texture = _uncheckedTexture;
+        }
         if(Collider.IsPointInside(addButt, Mouse.PosX, Mouse.PosY) && Mouse.LeftDown && !mouseDown)
         {
             TileBrush butt = new TileBrush();
         }
         
-        if(Collider.IsPointInside(goUp, Mouse.PosX, Mouse.PosY) && Mouse.LeftDown && !mouseDown)
+        if(Collider.IsPointInside(goUp, Mouse.PosX, Mouse.PosY) && Mouse.LeftDown)
         {
             if(ButtonOffset + 3 <= MaxOffset)
                 ButtonOffset += 3;
         }
 
-        if(Collider.IsPointInside(goDown, Mouse.PosX, Mouse.PosY) && Mouse.LeftDown && !mouseDown)
+        if(Collider.IsPointInside(goDown, Mouse.PosX, Mouse.PosY) && Mouse.LeftDown)
         {
             if(ButtonOffset - 3 >= 0)
                 ButtonOffset -= 3;
@@ -125,8 +141,6 @@ public class UI : GameLogic
         {
             Parser.LoadImageTile();
         }
-
-
         if(Collider.IsPointInside(scrollLeft, Mouse.PosX, Mouse.PosY) && mouseDown)
         {   
             Camera.PosX -= camSpeed * DeltaTime;
@@ -142,6 +156,17 @@ public class UI : GameLogic
         if(Collider.IsPointInside(scrollDown, Mouse.PosX, Mouse.PosY) && mouseDown)
         {
             Camera.PosY += camSpeed * DeltaTime;
+        }
+        if(Collider.IsPointInside(localCheckMark, Mouse.PosX, Mouse.PosY) && Mouse.LeftDown && !mouseDown)
+        {
+            if(LocalPathActive)
+            {
+                LocalPathActive = false;
+            }
+            else
+            {
+                LocalPathActive = true;
+            }
         }
 
         coordText.DisplayText = $"{Math.Floor(Mouse.PosX)}; {Math.Floor(Mouse.PosY)};";
@@ -160,10 +185,11 @@ public class UI : GameLogic
         saveImageTile.Draw();
         loadImageTile.Draw();
         coordText.Draw();
+        localCheckMark.Draw();
 
         foreach(TileBrush button in Buttons)
         {
-            if(button.PosY - ButtonOffset < 3 && button.PosY - ButtonOffset > -9.5)
+            if(button.PosY - ButtonOffset < 0 && button.PosY - ButtonOffset > -9.5)
             {
                 if(Collider.IsPointInside((CollidableElement)button.Rect, Mouse.PosX, Mouse.PosY) && Mouse.LeftDown && !mouseDown)
                 {

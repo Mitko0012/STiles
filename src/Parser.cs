@@ -149,7 +149,22 @@ public static class Parser
         foreach(TileBrush brush in UI.Buttons)
         {
             locations[repeatCount] = new FileLocation(brush.IsTextured, brush.BrushType);
-            locations[repeatCount].Location = brush.IsTextured? brush.FileLocation : "";
+            if(brush.IsTextured)
+            {
+                if(UI.LocalPathActive && brush.FileLocation.StartsWith(Directory.GetCurrentDirectory()))
+                {
+                    locations[repeatCount].Location = brush.FileLocation.Split(Directory.GetCurrentDirectory())[1];
+                    locations[repeatCount].Location = locations[repeatCount].Location.Split("\\")[1];
+                }
+                else
+                {
+                    locations[repeatCount].Location = brush.FileLocation;
+                }
+            }
+            else
+            {
+                locations[repeatCount].Location = "";
+            }
             repeatCount++;
         }
         SaveFileDialog dialog = new SaveFileDialog();

@@ -12,6 +12,8 @@
     <EmbeddedResource Include="Textures\LoadTile.png" />
     <EmbeddedResource Include="Textures\SaveImageTile.png" />
     <EmbeddedResource Include="Textures\LoadImageTile.png" />
+    <EmbeddedResource Include="Textures\uncheckedbox.png" />
+    <EmbeddedResource Include="Textures\checkedbox.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,7 +25,7 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
 </Project>
