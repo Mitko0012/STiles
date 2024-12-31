@@ -22,10 +22,6 @@ public class UI : GameLogic
     public static double MaxOffset = 0;
 
     public static FullRectangle ControlRect = new FullRectangle(-5, 7.5, 18, 5.1, Color.Gray);
-    Sprite scrollLeft = new Sprite(4.5, 10.3, 1.8, 1.8, new STexture("STiles.Textures.LeftArrow.png", STextureOrigin.EmbeddedImage));
-    Sprite scrollDown = new Sprite(7.2, 10.3, 1.8, 1.8, new STexture("STiles.Textures.DownArrow.png", STextureOrigin.EmbeddedImage));
-    Sprite scrollUp = new Sprite(7.2, 7.8, 1.8, 1.8, new STexture("STiles.Textures.UpArrow.png", STextureOrigin.EmbeddedImage));
-    Sprite scrollRight = new Sprite(9.9, 10.3, 1.8, 1.8, new STexture("STiles.Textures.RightArrow.png", STextureOrigin.EmbeddedImage));
     Sprite loadTile = new Sprite(-11.8, 3.3, 2.5, 2.5, new STexture("STiles.Textures.LoadTile.png", STextureOrigin.EmbeddedImage));
     Sprite localCheckMark = new Sprite(-11.8, 0.5, 2.5, 2.5, new STexture("STiles.Textures.uncheckedbox.png", STextureOrigin.EmbeddedImage))
     {
@@ -57,10 +53,7 @@ public class UI : GameLogic
         LoadImg.IsSticky = true;
         saveButt.IsSticky= true;
         ControlRect.IsSticky = true;
-        scrollDown.IsSticky = true;
-        scrollLeft.IsSticky = true;
-        scrollRight.IsSticky = true;
-        scrollUp.IsSticky = true;
+         
         goUp.IsSticky= true;
         goDown.IsSticky= true;
         loadTile.IsSticky = true;
@@ -141,19 +134,19 @@ public class UI : GameLogic
         {
             Parser.LoadImageTile();
         }
-        if(Collider.IsPointInside(scrollLeft, Mouse.PosX, Mouse.PosY) && mouseDown)
+        if(KeyHandler.KeysDown["A"])
         {   
             Camera.PosX -= camSpeed * DeltaTime;
         }
-        if(Collider.IsPointInside(scrollRight, Mouse.PosX, Mouse.PosY) && mouseDown)
+        if(KeyHandler.KeysDown["D"])
         {
             Camera.PosX += camSpeed * DeltaTime;
         }
-        if(Collider.IsPointInside(scrollUp, Mouse.PosX, Mouse.PosY) && mouseDown)
+        if(KeyHandler.KeysDown["W"])
         {
             Camera.PosY -= camSpeed * DeltaTime;
         }    
-        if(Collider.IsPointInside(scrollDown, Mouse.PosX, Mouse.PosY) && mouseDown)
+        if(KeyHandler.KeysDown["S"])
         {
             Camera.PosY += camSpeed * DeltaTime;
         }
@@ -177,10 +170,6 @@ public class UI : GameLogic
         addButt.Draw();
         saveButt.Draw();
         ControlRect.Draw();
-        scrollLeft.Draw();
-        scrollDown.Draw();
-        scrollRight.Draw();
-        scrollUp.Draw();
         loadTile.Draw();
         saveImageTile.Draw();
         loadImageTile.Draw();
