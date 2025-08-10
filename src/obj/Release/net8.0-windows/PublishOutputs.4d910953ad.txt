@@ -1,0 +1,13 @@
+C:\Users\Mitko\Desktop\Projects\STiles\STiles\src\bin\Release\net8.0-windows\publish\STiles.exe
+C:\Users\Mitko\Desktop\Projects\STiles\STiles\src\bin\Release\net8.0-windows\publish\STiles.dll
+C:\Users\Mitko\Desktop\Projects\STiles\STiles\src\bin\Release\net8.0-windows\publish\STiles.deps.json
+C:\Users\Mitko\Desktop\Projects\STiles\STiles\src\bin\Release\net8.0-windows\publish\STiles.runtimeconfig.json
+C:\Users\Mitko\Desktop\Projects\STiles\STiles\src\bin\Release\net8.0-windows\publish\STiles.pdb
+C:\Users\Mitko\Desktop\Projects\STiles\STiles\src\bin\Release\net8.0-windows\publish\NAudio.dll
+C:\Users\Mitko\Desktop\Projects\STiles\STiles\src\bin\Release\net8.0-windows\publish\NAudio.Asio.dll
+C:\Users\Mitko\Desktop\Projects\STiles\STiles\src\bin\Release\net8.0-windows\publish\NAudio.Core.dll
+C:\Users\Mitko\Desktop\Projects\STiles\STiles\src\bin\Release\net8.0-windows\publish\NAudio.Midi.dll
+C:\Users\Mitko\Desktop\Projects\STiles\STiles\src\bin\Release\net8.0-windows\publish\NAudio.Wasapi.dll
+C:\Users\Mitko\Desktop\Projects\STiles\STiles\src\bin\Release\net8.0-windows\publish\NAudio.WinForms.dll
+C:\Users\Mitko\Desktop\Projects\STiles\STiles\src\bin\Release\net8.0-windows\publish\NAudio.WinMM.dll
+C:\Users\Mitko\Desktop\Projects\STiles\STiles\src\bin\Release\net8.0-windows\publish\Seed.dll

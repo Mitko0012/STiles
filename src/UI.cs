@@ -69,7 +69,7 @@ public class UI : GameLogic
         Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine("Selected tile: " + Cursor.SelectedType + (Cursor.SelectedType == 0? " (Delete)": ""));
 
-        GameLogic.SetTitle("STiles version 1.0.3");
+        GameLogic.SetTitle("STiles version 1.0.5");
     }
 
     public override void OnFrame()
